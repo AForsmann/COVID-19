@@ -128,3 +128,11 @@ obj
 appsettings.json
 local.settings.json
 .python_packages
+
+#funcignore
+.git*
+.vscode
+local.settings.json
+test
+.venv
+.funcignore
