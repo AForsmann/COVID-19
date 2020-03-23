@@ -22,10 +22,10 @@ def main(mytimer: func.TimerRequest) -> None:
     while True:
         try:
             df = pd.read_excel("https://www.ecdc.europa.eu/sites/default/files/documents/COVID-19-geographic-disbtribution-worldwide-%s.xlsx"%date.strftime("%Y-%m-%d"))
-            print(date)
+            logging.info("date: %s"%date)
             break
         except Exception as e:
-            print(e)
+            logging.info(e)
             date -= datetime.timedelta(days=1)
     df['DateRep'] = pd.to_datetime(df['DateRep']).dt.date
 
