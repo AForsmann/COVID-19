@@ -4,6 +4,7 @@ from urllib.request import urlopen
 import json
 import pyodbc
 from datetime import date
+import os
 
 def main(mytimer: func.TimerRequest) -> None:
     
@@ -17,13 +18,16 @@ def main(mytimer: func.TimerRequest) -> None:
 
     features = jsonObj["features"]
 
-    cnxn = pyodbc.connect("Driver={ODBC Driver 17 for SQL Server};"
-                      "Server=covid19dbserver.database.windows.net;"
-                      "Database=covid19db;"
-                      "Uid=serveradmin;"
-                      "Pwd=IlKh1LBn70XcfUCdu8KB;"
-                      "Trusted_Connection=no;")
+    username = os.environ.get('keyvault_db_username')
+    password = os.environ.get('keyvault_db_password')
 
+    cnxn = pyodbc.connect("Driver={ODBC Driver 17 for SQL Server};"
+                        "Server=covid19dbserver.database.windows.net;"
+                        "Database=covid19db;"
+                        "Uid="+username   
+                      +";Pwd="+password   
+                      +";Trusted_Connection=no;")
+                      
     cursor=cnxn.cursor()
 
     deleteQuery = "TRUNCATE TABLE RKICounties_updates;"

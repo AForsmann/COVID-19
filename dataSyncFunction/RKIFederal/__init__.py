@@ -4,6 +4,7 @@ import azure.functions as func
 from urllib.request import urlopen
 import json
 import pyodbc
+import os
 
 def main(mytimer: func.TimerRequest) -> None:
     # utc_timestamp = datetime.datetime.utcnow().replace(
@@ -19,12 +20,16 @@ def main(mytimer: func.TimerRequest) -> None:
 
     features = jsonObj["features"]
 
+    username = os.environ.get('keyvault_db_username')
+    password = os.environ.get('keyvault_db_password')
+
     cnxn = pyodbc.connect("Driver={ODBC Driver 17 for SQL Server};"
-                      "Server=covid19dbserver.database.windows.net;"
-                      "Database=covid19db;"
-                      "Uid=serveradmin;"
-                      "Pwd=IlKh1LBn70XcfUCdu8KB;"
-                      "Trusted_Connection=no;")
+                        "Server=covid19dbserver.database.windows.net;"
+                        "Database=covid19db;"
+                        "Uid="+username   
+                      +";Pwd="+password   
+                      +";Trusted_Connection=no;")
+
 
     cursor=cnxn.cursor()
 

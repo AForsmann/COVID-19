@@ -4,7 +4,7 @@ import datetime
 import pyodbc
 import csv
 from azure.storage.blob import BlockBlobService
-
+import os
 
 def main(mytimer: func.TimerRequest) -> None:
     
@@ -14,12 +14,15 @@ def main(mytimer: func.TimerRequest) -> None:
 
     block_blob_service = BlockBlobService(account_name='covid19publicdata', account_key='iX7ih9IjJd91YYJkCrZQ6peacQdI+ylBa5RoA6NY5LxMW9O9NAS1/AUQ3pskgM6wMNcNZPxFvb1dQd9p6sVxDw==')
 
+    username = os.environ.get('keyvault_db_username')
+    password = os.environ.get('keyvault_db_password')
+
     cnxn = pyodbc.connect("Driver={ODBC Driver 17 for SQL Server};"
                         "Server=covid19dbserver.database.windows.net;"
                         "Database=covid19db;"
-                        "Uid=serveradmin;"
-                        "Pwd=IlKh1LBn70XcfUCdu8KB;"
-                        "Trusted_Connection=no;")
+                        "Uid="+username   
+                      +";Pwd="+password   
+                      +";Trusted_Connection=no;")
 
     cursor=cnxn.cursor()
     #FEDERALVIEW
