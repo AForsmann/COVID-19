@@ -56,6 +56,8 @@ def main(mytimer: func.TimerRequest) -> None:
 
     username = os.environ.get('keyvault_db_username')
     password = os.environ.get('keyvault_db_password')
+    logging.info(username)
+    logging.info(password)
 
     params = urllib.parse.quote_plus(
         'Driver={ODBC Driver 17 for SQL Server};Server=tcp:covid19dbserver.database.windows.net,1433;Database=covid19db;Uid='+username
