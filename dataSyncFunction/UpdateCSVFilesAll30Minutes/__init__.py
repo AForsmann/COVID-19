@@ -12,10 +12,12 @@ def main(mytimer: func.TimerRequest) -> None:
     if mytimer.past_due:
         logging.info('The timer is past due!')
 
-    block_blob_service = BlockBlobService(account_name='covid19publicdata', account_key='iX7ih9IjJd91YYJkCrZQ6peacQdI+ylBa5RoA6NY5LxMW9O9NAS1/AUQ3pskgM6wMNcNZPxFvb1dQd9p6sVxDw==')
-
     username = os.environ.get('keyvault_db_username')
     password = os.environ.get('keyvault_db_password')
+    blobaccountname = os.environ.get('blobaccountname')
+    blob_account_key = os.environ.get('blobaccountkey')
+
+    block_blob_service = BlockBlobService(account_name=blobaccountname, account_key=blob_account_key)
 
     cnxn = pyodbc.connect("Driver={ODBC Driver 17 for SQL Server};"
                         "Server=covid19dbserver.database.windows.net;"
